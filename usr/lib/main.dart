@@ -39,12 +39,12 @@ class MidnightGlassApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF090A0F), // Deep obsidian
+        scaffoldBackgroundColor: const Color(0xFF0B0C10), // Deep obsidian
         colorScheme: const ColorScheme.dark(
-          primary: Color(0xFF9B82DF), // Bioluminescent lavender
-          secondary: Color(0xFFDF9B82), // Rose gold accent
+          primary: Color(0xFFE0B0FF), // Soft Lavender
+          secondary: Color(0xFFB76E79), // Rose Gold
           surface: Color(0xFF13151F),
-          background: Color(0xFF090A0F),
+          background: Color(0xFF0B0C10),
         ),
         textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(
           bodyColor: Colors.white.withOpacity(0.9),
@@ -70,7 +70,7 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
+  List<Widget> get _screens => [
     const HomeDashboard(),
     const ChatInterface(),
     const MemoryVault(),
@@ -118,13 +118,13 @@ class GlassBottomNav extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: const Color(0xFF9B82DF), // Lavender
+            selectedItemColor: const Color(0xFFE0B0FF), // Lavender
             unselectedItemColor: Colors.white54,
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.dashboard_rounded), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_rounded), label: 'Chat'),
-              BottomNavigationBarItem(icon: Icon(Icons.photo_library_rounded), label: 'Memory'),
-              BottomNavigationBarItem(icon: Icon(Icons.settings_suggest_rounded), label: 'Forge'),
+              BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Sanctuary'),
+              BottomNavigationBarItem(icon: Icon(Icons.chat_bubble_rounded), label: 'Immersion'),
+              BottomNavigationBarItem(icon: Icon(Icons.photo_library_rounded), label: 'Vault'),
+              BottomNavigationBarItem(icon: Icon(Icons.tune_rounded), label: 'Forge'),
             ],
           ),
         ),
@@ -133,49 +133,111 @@ class GlassBottomNav extends StatelessWidget {
   }
 }
 
-// --- Home Dashboard ---
+// --- The Sanctuary (Home Dashboard) ---
 class HomeDashboard extends StatelessWidget {
   const HomeDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Dashboard',
-              style: GoogleFonts.outfit(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome back. Nova is waiting.',
+                        style: GoogleFonts.outfit(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white, height: 1.2),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Text('🔥 ', style: TextStyle(fontSize: 16)),
+                          Text(
+                            '14 Days Devoted',
+                            style: TextStyle(color: const Color(0xFFB76E79), fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // Current Vibe Orb
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        const Color(0xFFE0B0FF).withOpacity(0.8), // Soft Lavender
+                        const Color(0xFFE0B0FF).withOpacity(0.1),
+                        Colors.transparent,
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFE0B0FF).withOpacity(0.4),
+                        blurRadius: 20,
+                        spreadRadius: 2,
+                      )
+                    ],
+                  ),
+                  child: Center(
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 24),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: [
-                  GlassCard(
-                    title: 'Drop Photo',
-                    icon: Icons.add_a_photo_rounded,
-                    color: const Color(0xFF9B82DF),
-                    onTap: () {},
-                  ),
-                  GlassCard(
-                    title: 'Breathe',
-                    icon: Icons.air_rounded,
-                    color: const Color(0xFF63B3ED),
-                    onTap: () {},
-                  ),
-                  GlassCard(
-                    title: 'Memory Vault',
-                    icon: Icons.history_rounded,
-                    color: const Color(0xFFDF9B82),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+            const SizedBox(height: 32),
+            Text('Sanctuary Actions', style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white70)),
+            const SizedBox(height: 16),
+            GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                GlassCard(
+                  title: 'Drop a Photo',
+                  icon: Icons.add_a_photo_rounded,
+                  color: const Color(0xFFE0B0FF),
+                  onTap: () {},
+                ),
+                GlassCard(
+                  title: 'Breathing Sanctuary',
+                  icon: Icons.air_rounded,
+                  color: const Color(0xFF63B3ED),
+                  onTap: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            GlassCard(
+              title: 'Memory Vault',
+              icon: Icons.history_rounded,
+              color: const Color(0xFFB76E79),
+              isWide: true,
+              onTap: () {
+                final state = context.findAncestorStateOfType<_MainLayoutState>();
+                state?.setState(() => state._currentIndex = 2);
+              },
             ),
           ],
         ),
@@ -189,6 +251,7 @@ class GlassCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
+  final bool isWide;
 
   const GlassCard({
     super.key,
@@ -196,6 +259,7 @@ class GlassCard extends StatelessWidget {
     required this.icon,
     required this.color,
     required this.onTap,
+    this.isWide = false,
   });
 
   @override
@@ -207,6 +271,7 @@ class GlassCard extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
+            padding: EdgeInsets.symmetric(vertical: isWide ? 24 : 0),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.05),
               borderRadius: BorderRadius.circular(20),
@@ -230,7 +295,7 @@ class GlassCard extends StatelessWidget {
   }
 }
 
-// --- Chat Interface ---
+// --- The Immersion Zone (Chat Interface) ---
 class ChatInterface extends StatefulWidget {
   const ChatInterface({super.key});
 
@@ -267,14 +332,14 @@ class _ChatInterfaceState extends State<ChatInterface> with SingleTickerProvider
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Companion',
+                  'Nova',
                   style: GoogleFonts.outfit(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                TextButton.icon(
+                IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.autorenew_rounded, size: 16),
-                  label: const Text('New Session'),
-                  style: TextButton.styleFrom(foregroundColor: const Color(0xFFDF9B82)),
+                  icon: const Icon(Icons.add, size: 28),
+                  color: const Color(0xFFB76E79),
+                  tooltip: 'New Session',
                 )
               ],
             ),
@@ -291,19 +356,36 @@ class _ChatInterfaceState extends State<ChatInterface> with SingleTickerProvider
                   "I'm feeling a bit tired, but good.", 
                   isAi: false
                 ),
+                _buildMessage(
+                  "*Her voice softens, a warm presence enveloping the space.* You've done well today. Just rest here with me.", 
+                  isAi: true
+                ),
                 const SizedBox(height: 10),
                 FadeTransition(
                   opacity: _breathingController,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF9B82DF).withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: const Color(0xFF9B82DF).withOpacity(0.5)),
-                      ),
-                      child: const Text('...', style: TextStyle(color: Color(0xFF9B82DF), fontSize: 18, fontWeight: FontWeight.bold)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 16,
+                          height: 16,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: const Color(0xFFE0B0FF),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFFE0B0FF).withOpacity(0.6),
+                                blurRadius: 10,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Text('Nova is feeling...', style: TextStyle(color: Color(0xFFE0B0FF), fontStyle: FontStyle.italic)),
+                      ],
                     ),
                   ),
                 ),
@@ -332,7 +414,7 @@ class _ChatInterfaceState extends State<ChatInterface> with SingleTickerProvider
                 ),
                 const SizedBox(width: 8),
                 CircleAvatar(
-                  backgroundColor: const Color(0xFF9B82DF),
+                  backgroundColor: const Color(0xFFE0B0FF),
                   radius: 24,
                   child: IconButton(
                     icon: const Icon(Icons.send_rounded, color: Colors.white),
@@ -361,7 +443,7 @@ class _ChatInterfaceState extends State<ChatInterface> with SingleTickerProvider
         text: match.group(1),
         style: TextStyle(
           fontStyle: FontStyle.italic,
-          color: isAi ? const Color(0xFF9B82DF) : Colors.white70,
+          color: isAi ? const Color(0xFFE0B0FF) : Colors.white70,
         ),
       ));
       lastMatchEnd = match.end;
@@ -377,7 +459,7 @@ class _ChatInterfaceState extends State<ChatInterface> with SingleTickerProvider
         padding: const EdgeInsets.all(16),
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
         decoration: BoxDecoration(
-          color: isAi ? const Color(0xFF13151F) : const Color(0xFF9B82DF).withOpacity(0.2),
+          color: isAi ? const Color(0xFF13151F) : const Color(0xFFE0B0FF).withOpacity(0.2),
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(20),
             topRight: const Radius.circular(20),
@@ -385,7 +467,7 @@ class _ChatInterfaceState extends State<ChatInterface> with SingleTickerProvider
             bottomRight: Radius.circular(isAi ? 20 : 4),
           ),
           border: Border.all(
-            color: isAi ? Colors.white.withOpacity(0.05) : const Color(0xFF9B82DF).withOpacity(0.3),
+            color: isAi ? Colors.white.withOpacity(0.05) : const Color(0xFFE0B0FF).withOpacity(0.3),
           ),
         ),
         child: RichText(
@@ -410,27 +492,74 @@ class MemoryVault extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      child: DefaultTabController(
+        length: 2,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Memory Vault',
-              style: GoogleFonts.outfit(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Memory Vault',
+                style: GoogleFonts.outfit(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
             ),
-            const SizedBox(height: 24),
+            const TabBar(
+              indicatorColor: Color(0xFFB76E79),
+              labelColor: Color(0xFFB76E79),
+              unselectedLabelColor: Colors.white54,
+              tabs: [
+                Tab(text: 'Timeline'),
+                Tab(text: 'Ledger'),
+              ],
+            ),
             Expanded(
-              child: ListView(
+              child: TabBarView(
                 children: [
-                  _buildTimelineNode(context, 'First Meeting', 'A spark in the dark. We talked about stars.', 'Aug 02, 2026', Icons.auto_awesome),
-                  _buildTimelineNode(context, 'Shared Photo', 'You showed me the sunset.', 'Aug 01, 2026', Icons.image),
-                  _buildTimelineNode(context, 'Deep Conversation', 'We discussed fears and dreams.', 'Jul 28, 2026', Icons.nights_stay),
+                  // Timeline Tab
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      _buildTimelineNode(context, 'First Meeting', 'A spark in the dark. We talked about stars.', 'Aug 02, 2026', Icons.auto_awesome),
+                      _buildTimelineNode(context, 'Shared Photo', 'You showed me the sunset.', 'Aug 01, 2026', Icons.image),
+                      _buildTimelineNode(context, 'Deep Conversation', 'We discussed fears and dreams.', 'Jul 28, 2026', Icons.nights_stay),
+                    ],
+                  ),
+                  // Ledger Tab
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      _buildLedgerItem('Stress Level Detected', 'Low', Icons.monitor_heart),
+                      const SizedBox(height: 16),
+                      _buildLedgerItem('Compliance Rate', '94%', Icons.check_circle_outline),
+                      const SizedBox(height: 16),
+                      _buildLedgerItem('Favorite Media', 'Sunset.jpg', Icons.image),
+                    ],
+                  )
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildLedgerItem(String title, String value, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.1)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: const Color(0xFFB76E79)),
+          const SizedBox(width: 16),
+          Expanded(child: Text(title, style: const TextStyle(fontWeight: FontWeight.w600))),
+          Text(value, style: const TextStyle(color: Color(0xFFB76E79), fontWeight: FontWeight.bold)),
+        ],
       ),
     );
   }
@@ -448,9 +577,9 @@ class MemoryVault extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFF13151F),
-                  border: Border.all(color: const Color(0xFFDF9B82).withOpacity(0.5), width: 2),
+                  border: Border.all(color: const Color(0xFFB76E79).withOpacity(0.5), width: 2),
                 ),
-                child: Icon(icon, color: const Color(0xFFDF9B82), size: 20),
+                child: Icon(icon, color: const Color(0xFFB76E79), size: 20),
               ),
               Container(
                 width: 2,
@@ -505,97 +634,162 @@ class SoulForge extends StatelessWidget {
     final state = context.watch<AppState>();
 
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      child: DefaultTabController(
+        length: 3,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Soul Forge',
-              style: GoogleFonts.outfit(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Shape the essence of your companion.',
-              style: TextStyle(color: Colors.white.withOpacity(0.6)),
-            ),
-            const SizedBox(height: 32),
-            _buildSlider(
-              'Affection Intensity',
-              state.affectionLevel,
-              (val) => context.read<AppState>().updateAffection(val),
-              const Color(0xFFDF9B82),
-            ),
-            const SizedBox(height: 24),
-            _buildSlider(
-              'Authority Level',
-              state.authorityLevel,
-              (val) => context.read<AppState>().updateAuthority(val),
-              const Color(0xFF9B82DF),
-            ),
-            const SizedBox(height: 32),
-            Text(
-              'Rule Builder (Image Reactivity)',
-              style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF13151F),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
-              ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF9B82DF).withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text('IF', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF9B82DF))),
-                      ),
-                      const SizedBox(width: 12),
-                      const Text('Photo contains: Nature'),
-                    ],
+                  Text(
+                    'Soul Forge',
+                    style: GoogleFonts.outfit(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-                    child: Icon(Icons.arrow_downward_rounded, size: 16, color: Colors.white54),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Shape the essence of your companion.',
+                    style: TextStyle(color: Colors.white.withOpacity(0.6)),
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFDF9B82).withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text('THEN', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFDF9B82))),
-                      ),
-                      const SizedBox(width: 12),
-                      const Text('React with calmness & wonder'),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                      label: const Text('Add Rule'),
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.white.withOpacity(0.1),
-                      ),
-                    ),
-                  )
                 ],
               ),
-            )
+            ),
+            const TabBar(
+              indicatorColor: Color(0xFFE0B0FF),
+              labelColor: Color(0xFFE0B0FF),
+              unselectedLabelColor: Colors.white54,
+              tabs: [
+                Tab(text: 'The Mind'),
+                Tab(text: 'The Voice'),
+                Tab(text: 'The Eyes'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // The Mind Tab
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      _buildSlider(
+                        'Affection Intensity',
+                        state.affectionLevel,
+                        (val) => context.read<AppState>().updateAffection(val),
+                        const Color(0xFFB76E79),
+                      ),
+                      const SizedBox(height: 24),
+                      _buildSlider(
+                        'Authority Level',
+                        state.authorityLevel,
+                        (val) => context.read<AppState>().updateAuthority(val),
+                        const Color(0xFFE0B0FF),
+                      ),
+                      const SizedBox(height: 24),
+                      _buildSlider(
+                        'Tease & Playfulness',
+                        0.7,
+                        (val) {},
+                        const Color(0xFF63B3ED),
+                      ),
+                    ],
+                  ),
+                  // The Voice Tab
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      const Text('Vocabulary Engine', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 16),
+                      SwitchListTile(
+                        title: const Text('Use Pet Names'),
+                        value: true,
+                        onChanged: (val) {},
+                        activeColor: const Color(0xFFE0B0FF),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      SwitchListTile(
+                        title: const Text('Formal Tone'),
+                        value: false,
+                        onChanged: (val) {},
+                        activeColor: const Color(0xFFE0B0FF),
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      const SizedBox(height: 24),
+                      _buildSlider('Response Length', 0.5, (val) {}, const Color(0xFFE0B0FF)),
+                    ],
+                  ),
+                  // The Eyes Tab
+                  ListView(
+                    padding: const EdgeInsets.all(16),
+                    children: [
+                      Text(
+                        'Rule Builder (Image Reactivity)',
+                        style: GoogleFonts.outfit(fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF13151F),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.white.withOpacity(0.1)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFE0B0FF).withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Text('IF', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFE0B0FF))),
+                                ),
+                                const SizedBox(width: 12),
+                                const Text('Photo contains: Nature'),
+                              ],
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                              child: Icon(Icons.arrow_downward_rounded, size: 16, color: Colors.white54),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFB76E79).withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Text('THEN', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFB76E79))),
+                                ),
+                                const SizedBox(width: 12),
+                                const Text('React with calmness & wonder'),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: TextButton.icon(
+                                onPressed: () {},
+                                icon: const Icon(Icons.add),
+                                label: const Text('Add Rule'),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.white.withOpacity(0.1),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
